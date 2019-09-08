@@ -113,7 +113,7 @@ app.post('/xuly', (req, res) => {
 app.get('/demo', (req, res) => {
     for (i = 1; i <= 23; i++) {
         var keo = SanPham({
-            Ten: "keo" + i,
+            Ten: "keo " + i,
             Gia: 100,
             ThuTu: i
         })
@@ -129,31 +129,31 @@ app.get('/demo', (req, res) => {
     res.send('save sanpham' + i)
 })
 
-app.get('/sanpham', (req, res) => {
-    // SanPham.find((err,items)=>{
-    //     if (err){
-    //         console.log("find sp err",err);
-    //         res.json({kq:0})
-    //     } else {
-    //         console.log("find sp success",items);
-    //         res.send(items)
+// app.get('/sanpham', (req, res) => {
+//     SanPham.find((err,items)=>{
+//         if (err){
+//             console.log("find sp err",err);
+//             res.json({kq:0})
+//         } else {
+//             console.log("find sp success",items);
+//             res.send(items)
 
-    //     }
-    // }).sort({ThuTu:1})
-    SanPham.find().countDocuments(function (err, count) {
-        if (err) {
-            console.log("find and count sp err", err);
-            res.json({ kq: 0 })
-        } else {
-            console.log("find sp and count success", count);
-            res.json({ kq: count })
-        }
-    })
-})
+//         }
+//     }).sort({ThuTu:1})
+//     SanPham.find().countDocuments(function (err, count) {
+//         if (err) {
+//             console.log("find and count sp err", err);
+//             res.json({ kq: 0 })
+//         } else {
+//             console.log("find sp and count success", count);
+//             res.json({ kq: count })
+//         }
+//     })
+// })
 
 app.get('/sp/:trang', function (req, res) {
     //sosp1trang
-    var sosp1trang = 8
+    var sosp1trang = 3
     //tong san pham tren DB
     SanPham.find().countDocuments(function (err, count) {
         if (err) {
@@ -172,11 +172,21 @@ app.get('/sp/:trang', function (req, res) {
             //skip
             var skip = (trang - 1) * sosp1trang
 
-            res.json({trang:trang, tongsotrang: tongsotrang, skip: skip })
+            // res.json({ trang: trang, tongsotrang: tongsotrang, skip: skip })
+
+            SanPham.find((err, mang) => {
+                if (err) {
+                    console.log("hien san pham theo trang", err);
+                    res.json({ kq: 0 })
+                } else {
+                    console.log("hien san pham theo trang success", mang);
+                    res.render("sanpham", {
+                        Mang: mang,
+                        TongTrang: tongsotrang,
+                        DangXem: trang
+                    })
+                }
+            }).sort({ ThuTu: 1 }).skip(skip).limit(sosp1trang)
         }
     })
-
-
-
-
 })

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 
 var sanphamSchema = new mongoose.Schema({
-    TenSanPham: String,
+    Ten: String,
     Gia: Number,
     ThuTu: Number
 });

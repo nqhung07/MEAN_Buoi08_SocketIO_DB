@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="layout.css">
+    <script src="jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Home Buoi07</title>
+
+    <script>
+
+    </script>
+
+</head>
+
+<body>
+    <h1>Danh sach san pham</h1>
+
+    <!-- <p>Tong trang: <%= TongTrang %></p> -->
+
+    <!-- vong lap tao link trang va route to trang -->
+    <% for (let i = 1; i<=TongTrang; i++){ %>
+    <a href="./<%- i %>"> <%= i %> </a>
+    <% } %>
+
+    <!-- hien thi danh sach san pham theo trang -->
+    <% Mang.forEach(sp => { %>
+    <p> <%= sp.Ten %> </p>
+    <% }); %>
+
+
+
+</body>
+
+</html>
