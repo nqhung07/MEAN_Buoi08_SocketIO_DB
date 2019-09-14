@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="layout.css">
-    <script src="jquery.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery.js"></script>
     <title>Home Buoi07</title>
 
     <script>
-
+        $(document).ready(function () {
+            // alert('ok')
+            $(".trang").click(function () {
+                var t = $(this).attr("trang");
+                $.get("/ajax/" + t, function (data) {
+                    $("#noidung").html(data)
+                })
+            })
+        })
     </script>
 
 </head>
@@ -22,16 +29,32 @@
     <!-- <p>Tong trang: <%= TongTrang %></p> -->
 
     <!-- vong lap tao link trang va route to trang -->
-    <% for (let i = 1; i<=TongTrang; i++){ %>
+    <!-- <% for (let i = 1; i<=TongTrang; i++){ %>
     <a href="./<%- i %>"> <%= i %> </a>
+    <% } %>  -->
+
+    <!-- hien thi danh sach san pham theo trang -->
+    <!-- <% Mang.forEach(sp => { %>
+    <p> <%= sp.Ten %> </p>
+    <% }); %> -->
+
+    <!-- goi ajax -->
+    <!-- vong lap tao link trang cho ajax -->
+    <% for (let i = 1; i<=TongTrang; i++){ %>
+    <span class="trang" trang="<%= i %>">
+        <%= i %>
+    </span>
     <% } %>
 
     <!-- hien thi danh sach san pham theo trang -->
-    <% Mang.forEach(sp => { %>
-    <p> <%= sp.Ten %> </p>
-    <% }); %>
+    <div id="noidung">
+        <% Mang.forEach(sp => { %>
+        <p> <%= sp.Ten %> </p>
+        <% }); %>
+    </div>
 
-
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/U4xPahDjY6k" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </body>
 

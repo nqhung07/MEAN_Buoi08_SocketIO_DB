@@ -190,3 +190,44 @@ app.get('/sp/:trang', function (req, res) {
         }
     })
 })
+
+//ajax
+app.get('/ajax/:trang', function (req, res) {
+    //sosp1trang
+    var sosp1trang = 3
+    //tong san pham tren DB
+    SanPham.find().countDocuments(function (err, count) {
+        if (err) {
+            console.log("find and count sp err", err);
+            res.json({ kq: 0 })
+        } else {
+            console.log("find sp and count success", count);
+
+            //tong so trang (nho lam tron len)
+            var tongsotrang = Math.ceil(count / sosp1trang);
+            // res.send("tongsotrang:" + tongsotrang)
+
+            //get :trang --> biet KH xem trang may
+            var trang = req.params.trang
+
+            //skip
+            var skip = (trang - 1) * sosp1trang
+
+            // res.json({ trang: trang, tongsotrang: tongsotrang, skip: skip })
+
+            SanPham.find((err, mang) => {
+                if (err) {
+                    console.log("hien san pham theo trang", err);
+                    res.json({ kq: 0 })
+                } else {
+                    console.log("hien san pham theo trang success", mang);
+                    res.render("sanpham2", {
+                        Mang: mang,
+                        TongTrang: tongsotrang,
+                        DangXem: trang
+                    })
+                }
+            }).sort({ ThuTu: 1 }).skip(skip).limit(sosp1trang)
+        }
+    })
+})
